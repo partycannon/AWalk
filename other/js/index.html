@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面</title>
+    <script>
+        window.onload = function() {
+            // 获取body
+            var bodyDiv = document.getElementsByTagName("body")[0];
+            // 创建按钮
+            var button = document.createElement("button");
+            var buttonText = document.createTextNode("click!!!\n以获取所有单词, 默认存放在剪切板中");
+
+            // 设置按钮的样式
+            button.style.width = "200px";
+            button.style.height = "100px";
+            button.style.position = "fixed";
+            button.style.left = "0px";
+            button.style.top = "0px";
+            button.style.zIndex = "999999";
+
+            
+
+            // 将按钮添加到body中
+            button.appendChild(buttonText);
+            bodyDiv.appendChild(button);
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

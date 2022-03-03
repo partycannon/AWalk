@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="icu.partycannon.mapper.VocabularyMapper">
+
+
+    <select id="get" resultType="icu.partycannon.pojo.Vocabulary">
+        select * from `vocabulary`
+    </select>
+    <select id="getVocabularyById" resultType="icu.partycannon.pojo.Vocabulary">
+        select * from `vocabulary` where `id` = #{id}
+    </select>
+    <select id="getVocabularyByWord" resultType="icu.partycannon.pojo.Vocabulary">
+        select * from `vocabulary` where `word` = #{word}
+    </select>
+    <select id="getVocabularyByPos" resultType="icu.partycannon.pojo.Vocabulary">
+        select * from `vocabulary` where `pos` = #{pos}
+    </select>
+    <select id="getVocabularyLikeTranslate" resultType="icu.partycannon.pojo.Vocabulary">
+        select * from `vocabulary` where `translate` like "%"#{translate}"%"
+    </select>
+
+    <insert id="insertVocabulary" parameterType="icu.partycannon.mapper.VocabularyMapper">
+        insert into `vocabulary` (`id`,`word`,`pos`,`translate`)values(#{id}, #{word}, #{pos}, #{translate})
+    </insert>
+
+    <update id="updateVocabulary" parameterType="icu.partycannon.mapper.VocabularyMapper">
+        update `vocabulary`
+        <set>
+            <if test="word != null">`word` = #{word},</if>
+            <if test="pos != null">`pos` = #{pos},</if>
+            <if test="translate != null">`translate` = #{translate}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVocabulary">
+        delete from vocabulary where id = #{id}
+    </delete>
+
+</mapper>

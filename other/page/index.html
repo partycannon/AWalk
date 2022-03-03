@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>背单词</title>
+    <script type="text/javascript">
+        function start() {
+            console.log("开始背词");
+            // 消除 “开始背词” 按钮
+            let button = document.getElementById("main_window_startButton");
+            button.parentNode.removeChild(button);
+        }
+    </script>
+    <style type="text/css">
+        body {
+            background-color: rgb(245, 245, 245);
+        }
+        .w {
+            margin: 0 auto;
+            width: 1200px;
+        }
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        .head {
+            margin-top: 20px;
+            font-size: 60px;
+        }
+        .main_window {
+            padding-top: 300px;
+
+            height: 500px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px rgb(192, 192, 192);
+        }
+        #main_window_startButton {
+            display: block;
+
+            margin: 0 auto;
+            
+            width: 300px;
+            height: 180px;
+            background-color: rgb(241, 241, 241);
+
+            border-radius: 30px;
+            border: 0px solid;
+            box-shadow: 0px 0px 10px rgb(192, 192, 192);
+
+            font-size: 40px;
+        }
+        #main_window_startButton:hover {
+            background-color: rgb(233, 233, 233);
+        }
+        #main_window_startButton:active {
+            background-color: rgb(221, 221, 221);
+        }
+    </style>
+</head>
+<body>
+<div class="head w">默写背词</div>
+<div class="main_window w">
+    <button id="main_window_startButton" onclick="start()">开始背词</button>
+</div>
+</body>
+</html>
