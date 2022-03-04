@@ -40,4 +40,8 @@
         delete from vocabulary where id = #{id}
     </delete>
 
+    <delete id="deleteAllVocabulary">
+        delete from vocabulary
+    </delete>
+
 </mapper>

@@ -57,4 +57,10 @@ public interface VocabularyMapper {
      * @return 返回被影响的行数
      */
     public int deleteVocabulary(Integer id);
+
+    /**
+     * 删除所有数据
+     * @return 返回被影响的行数
+     */
+    public int deleteAllVocabulary();
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class MapperTest {
+public class VocabularyMapperTest {
     @Test
     public void getVocabularyList() {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
@@ -90,6 +90,17 @@ public class MapperTest {
         VocabularyMapper vocabularyMapper = sqlSession.getMapper(VocabularyMapper.class);
 
         int flag = vocabularyMapper.deleteVocabulary(2);
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void deleteAllVocabulary() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        VocabularyMapper vocabularyMapper = sqlSession.getMapper(VocabularyMapper.class);
+
+        int flag = vocabularyMapper.deleteAllVocabulary();
 
         sqlSession.commit();
         sqlSession.close();
