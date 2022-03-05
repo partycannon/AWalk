@@ -2,13 +2,75 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>主页</title>
+    <title>背单词</title>
+    <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
     <script type="text/javascript">
+        // 全局数据
+        let globalData;
+        // 第一次选择单词之后的情况
+        let checkedData = new Array();
+        $(function(){
+
+        });
         function start() {
             console.log("开始背词");
             // 消除 “开始背词” 按钮
             let button = document.getElementById("main_window_startButton");
             button.parentNode.removeChild(button);
+
+            $.ajax({
+                url: "http://localhost:8080/getVocabularyList",
+                type: "GET",
+                success: function(data) {
+                    // 全局数据
+                    globalData = data;
+                    // 将单词显示到页面上 让用户勾选
+                    let $mainWindow = $("#id_main_window");
+                    // 添加 “请勾选”
+                    $mainWindow.append("<h1 class='main_window_h1'>请勾选</h1>");
+                    // 添加单词
+                    $mainWindow.append("<ul class='main_window_vocabularys'></ul>");
+                    let $mainWindowVocabularys = $(".main_window_vocabularys");
+                    for(let i = 0; i < data.length; i++) {
+                        let oneVocabulary = data[i].word+" "+data[i].pos+" "+data[i].translate;
+                        $mainWindowVocabularys.append("<li class='main_window_vocabulary'><input type='checkbox' id='checkbox_" + i + "'>" + "<label for='checkbox_" + i + "'>" + oneVocabulary + "</label>" + "</li>");
+                    }
+                    // 添加按钮
+                    $mainWindow.append("<button class='main_window_chooseSuccess' onclick='return chooseSuccess()'>已选好，开始背词！</button>");
+
+                    // 设置main_window的高度
+                    let row = Number(data.length / 3);
+                    let finalHeight = 72 + row*36 + 120;
+                    $mainWindow.css("height",finalHeight+100);
+                },
+                dataType: "json"
+            });
+        }
+
+        function chooseSuccess() {
+            // 检查用户是否已经选择单词
+            let $vocabularyCheckbox = $("input[type='checkbox']:checked");
+            if($vocabularyCheckbox.length == 0) {
+                alert("请选择单词！");
+                return false;
+            }
+
+            // 给用户一个确定选择的机会
+            if(confirm("确定选择这些吗？")) {
+                // 将数据先保存下来
+                for(let i = 0; i < $vocabularyCheckbox.length; i++) {
+                    let $vocabularyCheckboxId = $vocabularyCheckbox.attr("id");
+                    let index = $vocabularyCheckboxId.split("_")[1];
+                    checkedData[i] = globalData[index];
+                }
+
+                // 清空页面
+                let $mainWindow = $("#id_main_window");
+                $mainWindow.empty();
+
+                // 显示globalData中的第一个单词
+                $mainWindow.append("<span>"+checkedData[0].word+"</span>");
+            }
         }
     </script>
     <style type="text/css">
@@ -28,9 +90,9 @@
             font-size: 60px;
         }
         .main_window {
-            padding-top: 300px;
+            overflow: hidden;
 
-            height: 500px;
+            height: 800px;
             background-color: rgb(255, 255, 255);
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgb(192, 192, 192);
@@ -39,6 +101,7 @@
             display: block;
 
             margin: 0 auto;
+            margin-top: 300px;
 
             width: 300px;
             height: 180px;
@@ -56,12 +119,54 @@
         #main_window_startButton:active {
             background-color: rgb(221, 221, 221);
         }
+
+
+        .main_window_h1 {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .main_window_vocabularys {
+            margin-top: 30px;
+        }
+        .main_window_vocabulary {
+            display: inline-block;
+            list-style: none;
+            width: 396px;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .main_window_vocabulary input {
+            width: 20px;
+            height: 20px;
+        }
+        .main_window_chooseSuccess {
+            display: block;
+
+            margin: 20px auto 0px auto;
+
+            width: 400px;
+            height: 100px;
+            font-size: 30px;
+            background-color: rgb(235, 235, 235);
+            border-radius: 30px;
+            border: 0px solid;
+            box-shadow: 0px 0px 10px rgb(192, 192, 192);
+        }
+        .main_window_chooseSuccess:hover {
+            background-color: rgb(219, 219, 219);
+        }
+        .main_window_chooseSuccess:active {
+            background-color: rgb(202, 202, 202);
+        }
+
     </style>
 </head>
 <body>
 <div class="head w">默写背词</div>
-<div class="main_window w">
+<div class="main_window w" id="id_main_window">
     <button id="main_window_startButton" onclick="start()">开始背词</button>
+
 </div>
 </body>
 </html>

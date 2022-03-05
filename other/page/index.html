@@ -9,6 +9,12 @@
             // 消除 “开始背词” 按钮
             let button = document.getElementById("main_window_startButton");
             button.parentNode.removeChild(button);
+
+            /*
+            请勾选 72px
+            一个单词 36px
+            按钮 120px
+            */
         }
     </script>
     <style type="text/css">
@@ -28,9 +34,9 @@
             font-size: 60px;
         }
         .main_window {
-            padding-top: 300px;
+            overflow: hidden;
 
-            height: 500px;
+            height: 1800px;
             background-color: rgb(255, 255, 255);
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgb(192, 192, 192);
@@ -39,6 +45,7 @@
             display: block;
 
             margin: 0 auto;
+            margin-top: 300px;
             
             width: 300px;
             height: 180px;
@@ -56,12 +63,61 @@
         #main_window_startButton:active {
             background-color: rgb(221, 221, 221);
         }
+
+
+        .main_window_h1 {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .main_window_vocabularys {
+            margin-top: 30px;
+        }
+        .main_window_vocabulary {
+            display: inline-block;
+            list-style: none;
+            width: 396px;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .main_window_vocabulary input {
+            width: 20px;
+            height: 20px;
+        }
+        .main_window_chooseSuccess {
+            display: block;
+            
+            margin: 20px auto 0px auto;
+
+            width: 400px;
+            height: 100px;
+            font-size: 30px;
+            background-color: rgb(235, 235, 235);
+            border-radius: 30px;
+            border: 0px solid;
+            box-shadow: 0px 0px 10px rgb(192, 192, 192);
+        }
+        .main_window_chooseSuccess:hover {
+            background-color: rgb(219, 219, 219);
+        }
+        .main_window_chooseSuccess:active {
+            background-color: rgb(202, 202, 202);
+        }
     </style>
 </head>
 <body>
 <div class="head w">默写背词</div>
 <div class="main_window w">
-    <button id="main_window_startButton" onclick="start()">开始背词</button>
+   <!-- <button id="main_window_startButton" onclick="start()">开始背词</button> -->
+
+<h1 class="main_window_h1">请勾选</h1>
+<ul class="main_window_vocabularys">
+    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+</ul>
+<button class="main_window_chooseSuccess">已选好，开始背词！</button>
 </div>
 </body>
 </html>

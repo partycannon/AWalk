@@ -1,2 +1,10 @@
 server:
   port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://110.42.145.122:3306/awalk?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: party_cannon
+    password: 200205
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
