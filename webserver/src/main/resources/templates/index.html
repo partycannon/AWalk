@@ -179,10 +179,24 @@
                 $button.on("click", function(){
                     // 获取当前按钮的父亲
                     let $father = $button.parent();
-                    // 获取英文
-                    let $word = $father.children("span:first");
 
-                    alert($word.text());
+                    // 获取中文
+                    let $translate = $father.children("span:first");
+                    // 获取词性
+                    let $pos = $father.children("span:eq(1)");
+
+                    // 对 <span class='checked'>当前为空</span> 进行操作
+                    let $input = $father.children("input");
+                    let vocabularyIndex = $input.attr("id").split("_")[2]; // 获取按钮所在单词的index
+                    if (checkedData[vocabularyIndex].word == $input.val()) {
+                        $father.children("span:eq(2)").text("当前为'"+$input.val()+"' 结果正确").css("color","green");
+                    } else if ($input.val() == "") {
+                        $father.children("span:eq(2)").text("当前为空").css("color","grey");
+                    } else if (checkedData[vocabularyIndex].word != $input.val()) {
+                        $father.children("span:eq(2)").text("当前为'"+$input.val()+"' 结果不正确").css("color","red");
+                    } else {
+                        $father.children("span:eq(2)").text("未知");
+                    }
                 });
             }
         }
