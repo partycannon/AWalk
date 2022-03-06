@@ -5,6 +5,8 @@
     <title>背单词</title>
     <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
     <script type="text/javascript">
+        // start url
+        let startURL = "http://localhost:8080/getVocabularyList";
         // 全局数据
         let globalData;
         // 第一次选择单词之后的情况
@@ -19,7 +21,7 @@
             button.parentNode.removeChild(button);
 
             $.ajax({
-                url: "http://localhost:8080/getVocabularyList",
+                url: startURL,
                 type: "GET",
                 success: function(data) {
                     // 全局数据
@@ -58,18 +60,92 @@
             // 给用户一个确定选择的机会
             if(confirm("确定选择这些吗？")) {
                 // 将数据先保存下来
-                for(let i = 0; i < $vocabularyCheckbox.length; i++) {
-                    let $vocabularyCheckboxId = $vocabularyCheckbox.attr("id");
+                // 通过id来确定下标
+                for (let i = 0; i < $vocabularyCheckbox.length; i++) {
+                    let $vocabularyCheckboxId = $vocabularyCheckbox.eq(i).attr("id");
                     let index = $vocabularyCheckboxId.split("_")[1];
                     checkedData[i] = globalData[index];
+                    console.log(checkedData[i]);
                 }
 
                 // 清空页面
                 let $mainWindow = $("#id_main_window");
                 $mainWindow.empty();
 
-                // 显示globalData中的第一个单词
-                $mainWindow.append("<span>"+checkedData[0].word+"</span>");
+                // 显示 背词 界面
+                showRemember();
+            }
+        }
+
+        // 显示背诵的整体页面
+        function showRemember() {
+            // 默认下标为0
+            let index = 0;
+
+            // 获取主窗口
+            let $mainWindow = $("#id_main_window");
+            $mainWindow.append("<div class='main_window_vocabulary_oneWord'></div>");
+
+            // 获取 单词 词性 词义 整体div
+            let $mainWindowVocabularyOneWord = $("div[class='main_window_vocabulary_oneWord']");
+            // 将 单词 词性 词义 添加进整体div中
+            $mainWindowVocabularyOneWord.append("<span class='main_window_vocabulary_learn'>" + checkedData[0].word + "</span>");
+            $mainWindowVocabularyOneWord.append("<span class='main_window_vocabulary_learn'>" + checkedData[0].pos + "</span>");
+            $mainWindowVocabularyOneWord.append("<span class='main_window_vocabulary_learn'>" + checkedData[0].translate + "</span>");
+
+            //　将'第1/20'添加进主窗口
+            $mainWindow.append("<div class='main_window_vocabulary_number'>第" + (index+1) +"/" + checkedData.length + "个</div>");
+
+            // 将左右按钮添加进背词
+            $mainWindow.append("<button class='main_window_vocabulary_preButton'>上一个</button>");
+            $mainWindow.append("<button class='main_window_vocabulary_nextButton'>下一个</button>");
+
+            // 将 开始默写添加到主窗口
+            $mainWindow.append("<button class='main_window_startWriteFromMemory'>开 始 默 写</button>");
+
+            // 调整主窗口的高度
+            $mainWindow.css("height", "800px");
+
+            // 给按钮添加事件监听
+            let $preButton = $("button[class='main_window_vocabulary_preButton']");
+            let $nextButton = $("button[class='main_window_vocabulary_nextButton']");
+            $preButton.on("click", function(){
+                index--;
+                changeVocabulary(index);
+                checkIndex(index, $preButton, $nextButton);
+            });
+            $nextButton.on("click", function(){
+                index++;
+                changeVocabulary(index);
+                checkIndex(index, $preButton, $nextButton);
+            });
+
+            // 通过index判断是否显示“上一个”或者“下一个”按钮
+            checkIndex(index, $preButton, $nextButton);
+        }
+
+        function changeVocabulary(index) {
+            let $span = $("span[class='main_window_vocabulary_learn']");
+            $span.eq(0).text(checkedData[index].word);
+            $span.eq(1).text(checkedData[index].pos);
+            $span.eq(2).text(checkedData[index].translate);
+
+            // 修改当前是第几个的数字显示
+            let $number = $("div[class='main_window_vocabulary_number']");
+            $number.text("第"+(index+1)+"/"+checkedData.length+"个");
+        }
+
+        function checkIndex(index, $preButton, $nextButton) {
+            // 通过index判断是否显示按钮
+            if(index == 0) {
+                $preButton.hide();
+            } else {
+                $preButton.show();
+            }
+            if(index == checkedData.length-1) {
+                $nextButton.hide();
+            } else {
+                $nextButton.show();
             }
         }
     </script>
@@ -96,6 +172,9 @@
             background-color: rgb(255, 255, 255);
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgb(192, 192, 192);
+
+            /*为了让上一个和下一个的按钮绝对定位而使用*/
+            position: relative;
         }
         #main_window_startButton {
             display: block;
@@ -119,6 +198,7 @@
         #main_window_startButton:active {
             background-color: rgb(221, 221, 221);
         }
+
 
 
         .main_window_h1 {
@@ -160,6 +240,79 @@
             background-color: rgb(202, 202, 202);
         }
 
+
+
+        .main_window_vocabulary_oneWord {
+            margin-top: 80px;
+        }
+        .main_window_vocabulary_learn {
+            display: block;
+
+            font-size: 70px;
+            text-align: center;
+        }
+        .main_window_vocabulary_number {
+            margin-top: 220px;
+            font-size: 30px;
+            text-align: center;
+        }
+        .main_window_vocabulary_preButton {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+
+            height: 800px;
+            width: 180px;
+            background-color: rgb(209, 209, 209);
+            border: 0px solid #fff;
+            font-size: 30px;
+
+            border-radius: 20px 0px 0px 20px;
+        }
+        .main_window_vocabulary_nextButton {
+            position: absolute;
+            left: 1020px;
+            top: 0px;
+
+            height: 800px;
+            width: 180px;
+            background-color: rgb(209, 209, 209);
+            border: 0px solid #fff;
+            font-size: 30px;
+
+            border-radius: 0px 20px 20px 0px;
+        }
+        .main_window_vocabulary_preButton:hover {
+            background-color: rgb(199, 199, 199);
+        }
+        .main_window_vocabulary_preButton:active {
+            background-color: rgb(185, 185, 185);
+        }
+        .main_window_vocabulary_nextButton:hover {
+            background-color: rgb(199, 199, 199);
+        }
+        .main_window_vocabulary_nextButton:active {
+            background-color: rgb(185, 185, 185);
+        }
+        .main_window_startWriteFromMemory {
+            display: block;
+            margin: 0 auto;
+            margin-top: 80px;
+            width: 400px;
+            height: 100px;
+
+            font-size: 40px;
+
+            border-radius: 30px;
+            border: 0px solid;
+            /*box-shadow: 0px 0px 10px rgb(192, 192, 192);*/
+        }
+        .main_window_startWriteFromMemory:hover {
+            background-color: rgb(221, 221, 221);
+        }
+        .main_window_startWriteFromMemory:active {
+            background-color: rgb(212, 212, 212);
+        }
     </style>
 </head>
 <body>

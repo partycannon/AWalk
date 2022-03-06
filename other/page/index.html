@@ -36,10 +36,12 @@
         .main_window {
             overflow: hidden;
 
-            height: 1800px;
+            height: 800px;
             background-color: rgb(255, 255, 255);
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgb(192, 192, 192);
+
+            position: relative;
         }
         #main_window_startButton {
             display: block;
@@ -103,6 +105,78 @@
         .main_window_chooseSuccess:active {
             background-color: rgb(202, 202, 202);
         }
+
+        .main_window_vocabulary_oneWord {
+            margin-top: 80px;
+        }
+        .main_window_vocabulary_learn {
+            display: block;
+
+            font-size: 70px;
+            text-align: center;
+        }
+        .main_window_vocabulary_number {
+            margin-top: 220px;
+            font-size: 30px;
+            text-align: center;
+        }
+        .main_window_vocabulary_preButton {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            
+            height: 800px;
+            width: 180px;
+            background-color: rgb(209, 209, 209);
+            border: 0px solid #fff;
+            font-size: 30px;
+
+            border-radius: 20px 0px 0px 20px;
+        }
+        .main_window_vocabulary_nextButton {
+            position: absolute;
+            left: 1020px;
+            top: 0px;
+
+            height: 800px;
+            width: 180px;
+            background-color: rgb(209, 209, 209);
+            border: 0px solid #fff;
+            font-size: 30px;
+
+            border-radius: 0px 20px 20px 0px;
+        }
+        .main_window_vocabulary_preButton:hover {
+            background-color: rgb(199, 199, 199);
+        }
+        .main_window_vocabulary_preButton:active {
+            background-color: rgb(185, 185, 185);
+        }
+        .main_window_vocabulary_nextButton:hover {
+            background-color: rgb(199, 199, 199);
+        }
+        .main_window_vocabulary_nextButton:active {
+            background-color: rgb(185, 185, 185);
+        }
+        .main_window_startWriteFromMemory {
+            display: block;
+            margin: 0 auto;
+            margin-top: 80px;
+            width: 400px;
+            height: 100px;
+
+            font-size: 40px;
+
+            border-radius: 30px;
+            border: 0px solid;
+            /* box-shadow: 0px 0px 10px rgb(192, 192, 192); */
+        }
+        .main_window_startWriteFromMemory:hover {
+            background-color: rgb(221, 221, 221);
+        }
+        .main_window_startWriteFromMemory:active {
+            background-color: rgb(212, 212, 212);
+        }
     </style>
 </head>
 <body>
@@ -110,14 +184,24 @@
 <div class="main_window w">
    <!-- <button id="main_window_startButton" onclick="start()">开始背词</button> -->
 
-<h1 class="main_window_h1">请勾选</h1>
-<ul class="main_window_vocabularys">
-    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
-    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
-    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
-    <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
-</ul>
-<button class="main_window_chooseSuccess">已选好，开始背词！</button>
+    <!-- <h1 class="main_window_h1">请勾选</h1>
+    <ul class="main_window_vocabularys">
+        <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+        <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+        <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+        <li class="main_window_vocabulary"><input type="checkbox"/>apple n. 苹果</li>
+    </ul>
+    <button class="main_window_chooseSuccess">已选好，开始背词！</button> -->
+
+    <div class="main_window_vocabulary_oneWord">
+        <span class="main_window_vocabulary_learn">planet</span>
+        <span class="main_window_vocabulary_learn">n.</span>
+        <span class="main_window_vocabulary_learn">行星</span>
+    </div>
+    <div class="main_window_vocabulary_number">第1/20个</div>
+    <button class="main_window_vocabulary_preButton">上一个</button>
+    <button class="main_window_vocabulary_nextButton">下一个</button>
+    <button class="main_window_startWriteFromMemory">开 始 默 写</button>
 </div>
 </body>
 </html>
