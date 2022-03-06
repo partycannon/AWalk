@@ -169,6 +169,7 @@
 
             border-radius: 30px;
             border: 0px solid;
+            background-color: #fff;
             /* box-shadow: 0px 0px 10px rgb(192, 192, 192); */
         }
         .main_window_startWriteFromMemory:hover {
@@ -177,6 +178,48 @@
         .main_window_startWriteFromMemory:active {
             background-color: rgb(212, 212, 212);
         }
+
+
+        .main_window_backMemory {
+            width: 200px;
+            height: 100px;
+            font-size: 30px;
+            border-radius: 20px 0px 0px 0px;
+            border: 0px solid #fff;
+        }
+        .main_window_backMemory:hover {
+            background-color: rgb(233, 233, 233);
+        }
+        .main_window_backMemory:active {
+            background-color: rgb(221, 221, 221);
+        }
+        .main_window_writeFromMemoryOneVocabulary {
+            overflow: hidden;
+            margin-left: 50px;
+            margin-top: 40px;
+        }
+        .main_window_writeFromMemoryOneVocabulary span {
+            font-size: 30px;
+        }
+        .main_window_writeFromMemoryOneVocabulary input {
+            width: 300px;
+            height: 40px;
+            font-size: 30px;
+            padding: 0px 0px 0px 10px;
+        }
+        .main_window_writeFromMemoryOneVocabulary button {
+            vertical-align:top;
+            width: 80px;
+            height: 44px;
+            margin-left: 20px;
+        }
+        .main_window_writeFromMemoryOneVocabulary .checked {
+            margin-left: 40px;
+        }
+        /*
+        返回按钮100px
+        一个单词84px
+        */
     </style>
 </head>
 <body>
@@ -193,7 +236,7 @@
     </ul>
     <button class="main_window_chooseSuccess">已选好，开始背词！</button> -->
 
-    <div class="main_window_vocabulary_oneWord">
+    <!-- <div class="main_window_vocabulary_oneWord">
         <span class="main_window_vocabulary_learn">planet</span>
         <span class="main_window_vocabulary_learn">n.</span>
         <span class="main_window_vocabulary_learn">行星</span>
@@ -201,7 +244,33 @@
     <div class="main_window_vocabulary_number">第1/20个</div>
     <button class="main_window_vocabulary_preButton">上一个</button>
     <button class="main_window_vocabulary_nextButton">下一个</button>
-    <button class="main_window_startWriteFromMemory">开 始 默 写</button>
+    <button class="main_window_startWriteFromMemory">开 始 默 写</button> -->
+
+    <button class="main_window_backMemory">返回背词</button>
+    <div class="main_window_writeFromMemoryOneVocabulary">
+        <span class="word">行星</span>
+        <span class="pos">n.</span>
+        &nbsp;&nbsp;&nbsp;
+        <input type="text" id="id_wfm_0">
+        <button>确认</button>
+        <span class="checked">当前为空</span>
+    </div>
+    <div class="main_window_writeFromMemoryOneVocabulary">
+        <span class="word">行星</span>
+        <span class="pos">n.</span>
+        &nbsp;&nbsp;&nbsp;
+        <input type="text">
+        <button>确认</button>
+        <span class="checked">当前为'planet' 结果正确</span>
+    </div>
+    <div class="main_window_writeFromMemoryOneVocabulary">
+        <span class="word">行星</span>
+        <span class="pos">n.</span>
+        &nbsp;&nbsp;&nbsp;
+        <input type="text">
+        <button>确认</button>
+        <span class="checked">当前为'plant' 结果错误</span>
+    </div>
 </div>
 </body>
 </html>

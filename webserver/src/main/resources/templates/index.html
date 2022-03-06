@@ -68,22 +68,21 @@
                     console.log(checkedData[i]);
                 }
 
-                // 清空页面
-                let $mainWindow = $("#id_main_window");
-                $mainWindow.empty();
-
                 // 显示 背词 界面
                 showRemember();
             }
         }
 
-        // 显示背诵的整体页面
+        // 背词阶段 显示背诵的整体页面
         function showRemember() {
+            // 清空页面
+            let $mainWindow = $("#id_main_window");
+            $mainWindow.empty();
+
             // 默认下标为0
             let index = 0;
 
             // 获取主窗口
-            let $mainWindow = $("#id_main_window");
             $mainWindow.append("<div class='main_window_vocabulary_oneWord'></div>");
 
             // 获取 单词 词性 词义 整体div
@@ -109,6 +108,7 @@
             // 给按钮添加事件监听
             let $preButton = $("button[class='main_window_vocabulary_preButton']");
             let $nextButton = $("button[class='main_window_vocabulary_nextButton']");
+            let $startWFM = $("button[class='main_window_startWriteFromMemory']");
             $preButton.on("click", function(){
                 index--;
                 changeVocabulary(index);
@@ -119,11 +119,16 @@
                 changeVocabulary(index);
                 checkIndex(index, $preButton, $nextButton);
             });
+            $startWFM.on("click", function(){
+                // 开始默写
+                writeFromMemory();
+            });
 
             // 通过index判断是否显示“上一个”或者“下一个”按钮
             checkIndex(index, $preButton, $nextButton);
         }
 
+        // 背词阶段 更改背的词
         function changeVocabulary(index) {
             let $span = $("span[class='main_window_vocabulary_learn']");
             $span.eq(0).text(checkedData[index].word);
@@ -135,6 +140,7 @@
             $number.text("第"+(index+1)+"/"+checkedData.length+"个");
         }
 
+        // 背词阶段 判断index是否为边界
         function checkIndex(index, $preButton, $nextButton) {
             // 通过index判断是否显示按钮
             if(index == 0) {
@@ -148,6 +154,39 @@
                 $nextButton.show();
             }
         }
+
+        // 默词阶段
+        function writeFromMemory() {
+            // 清空页面
+            let $mainWindow = $("#id_main_window");
+            $mainWindow.empty();
+
+            // 添加返回按钮
+            $mainWindow.append("<button class='main_window_backMemory'>返回背词</button>");
+
+            // 添加内容
+            for(let i = 0; i < checkedData.length; i++) {
+                $mainWindow.append("<div class='main_window_writeFromMemoryOneVocabulary'></div>");
+                // 获取第i个
+                let $wfmDiv = $("div[class='main_window_writeFromMemoryOneVocabulary']").eq(i);
+                $wfmDiv.append("<span class='word'>" + checkedData[i].translate + " </span>");
+                $wfmDiv.append("<span class='pos'>" + checkedData[i].pos + "</span>&nbsp;&nbsp;&nbsp;");
+                $wfmDiv.append("<input type='text' id='id_wfm_" + i + "'/>");
+                $wfmDiv.append("<button>确定</button>");
+                $wfmDiv.append("<span class='checked'>当前为空</span>");
+                // 给当前单词的确定按钮添加单击事件
+                let $button = $wfmDiv.children("button");
+                $button.on("click", function(){
+                    // 获取当前按钮的父亲
+                    let $father = $button.parent();
+                    // 获取英文
+                    let $word = $father.children("span:first");
+
+                    alert($word.text());
+                });
+            }
+        }
+
     </script>
     <style type="text/css">
         body {
@@ -242,6 +281,7 @@
 
 
 
+        /*背词阶段*/
         .main_window_vocabulary_oneWord {
             margin-top: 80px;
         }
@@ -312,6 +352,46 @@
         }
         .main_window_startWriteFromMemory:active {
             background-color: rgb(212, 212, 212);
+        }
+
+
+
+        /*默写阶段*/
+        .main_window_backMemory {
+            width: 200px;
+            height: 100px;
+            font-size: 30px;
+            border-radius: 20px 0px 0px 0px;
+            border: 0px solid #fff;
+        }
+        .main_window_backMemory:hover {
+            background-color: rgb(233, 233, 233);
+        }
+        .main_window_backMemory:active {
+            background-color: rgb(221, 221, 221);
+        }
+        .main_window_writeFromMemoryOneVocabulary {
+            overflow: hidden;
+            margin-left: 50px;
+            margin-top: 40px;
+        }
+        .main_window_writeFromMemoryOneVocabulary span {
+            font-size: 30px;
+        }
+        .main_window_writeFromMemoryOneVocabulary input {
+            width: 300px;
+            height: 40px;
+            font-size: 30px;
+            padding: 0px 0px 0px 10px;
+        }
+        .main_window_writeFromMemoryOneVocabulary button {
+            vertical-align:top;
+            width: 80px;
+            height: 44px;
+            margin-left: 20px;
+        }
+        .main_window_writeFromMemoryOneVocabulary .checked {
+            margin-left: 40px;
         }
     </style>
 </head>
