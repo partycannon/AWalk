@@ -6,6 +6,7 @@ import icu.partycannon.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,30 @@ public class AddVocabularyTest {
         for(Vocabulary vocabulary : list) {
             vocabularyMapper.insertVocabulary(vocabulary);
         }
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test_02() throws IOException {
+        InputStream inputStream = AddVocabularyTest.class.getClassLoader().getResourceAsStream("files/20220310.txt");
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        VocabularyMapper vocabularyMapper = sqlSession.getMapper(VocabularyMapper.class);
+
+        String str = "";
+        while ((str=bufferedReader.readLine())!=null) {
+            String[] wordAndPosAndTranslate = str.split(" ");
+            String word = wordAndPosAndTranslate[0];
+            String pos = wordAndPosAndTranslate[1];
+            String translate = wordAndPosAndTranslate[2];
+
+            Vocabulary vocabulary = new Vocabulary(word,pos,translate);
+            vocabularyMapper.insertVocabulary(vocabulary);
+        }
+
         sqlSession.commit();
         sqlSession.close();
     }
