@@ -6,11 +6,15 @@
     <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
     <script type="text/javascript">
         // start url
-        let startURL = "http://localhost:8080/getVocabularyList";
+        let startURL = "http://www.partycannon.icu/getVocabularyList";
         // 全局数据
         let globalData;
         // 第一次选择单词之后的情况
         let checkedData = new Array();
+        // 默写的存档
+        let saveData = new Array();
+        // 默写的对错状态存档
+        let statusData = new Array();
         $(function(){
 
         });
@@ -198,6 +202,38 @@
                         $father.children("span:eq(2)").text("未知");
                     }
                 });
+            }
+            // 修改主窗口的高度
+            $mainWindow.css("height", 100 + 84 * checkedData.length + 100);
+
+            // 给 返回背词界面按钮添加事件监听
+            let $backButton = $("button[class='main_window_backMemory']");
+            $backButton.on("click", function(){
+                // 存档
+                save();
+                showRemember();
+            });
+
+            // 将存档内容写入到input中
+            if (saveData.length == 0) {
+                return;
+            }
+            for (let i = 0; i < saveData.length; i++) {
+                // 从saveData读取用户的可能存在的上次的输入
+                $("input").eq(i).val(saveData[i]);
+                // 从statusData读取用户可能存在的上次的判题结果
+                $("div[class='main_window_writeFromMemoryOneVocabulary']").eq(i).children("span").eq(2).text(statusData[i]);
+            }
+        }
+
+        // 将用户填写好的单词进行保存
+        function save() {
+            // 将用户输入的内容保存下来
+            for (let i = 0; i < checkedData.length; i++) {
+                // 将用户输入的内容存到保存的地方
+                saveData[i] = $("input").eq(i).val();
+                // 将用户的判题结果保存下来
+                statusData[i] = $("div[class='main_window_writeFromMemoryOneVocabulary']").eq(i).children("span").eq(2).text();
             }
         }
 
