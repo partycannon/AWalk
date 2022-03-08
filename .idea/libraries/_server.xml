@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="server">
+  <library name="_server">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/server/lib/hamcrest-core-1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/server/lib/junit-4.12.jar!/" />

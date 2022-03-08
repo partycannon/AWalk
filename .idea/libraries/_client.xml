@@ -1,8 +1,9 @@
 <component name="libraryTable">
-  <library name="client">
+  <library name="_client">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/client/lib/hamcrest-core-1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/client/lib/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/client/lib/lombok-1.18.22.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
