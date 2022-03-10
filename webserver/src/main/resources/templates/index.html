@@ -7,6 +7,7 @@
     <script type="text/javascript">
         // start url
         let startURL = "http://www.partycannon.icu/getVocabularyList";
+        //let startURL = "http://localhost/getVocabularyList";
         // 全局数据
         let globalData;
         // 第一次选择单词之后的情况
@@ -47,7 +48,7 @@
                     // 设置main_window的高度
                     let row = Number(data.length / 3);
                     let finalHeight = 72 + row*36 + 120;
-                    $mainWindow.css("height",finalHeight+100);
+                    $mainWindow.css("height",finalHeight+500);
                 },
                 dataType: "json"
             });
@@ -71,6 +72,9 @@
                     checkedData[i] = globalData[index];
                     console.log(checkedData[i]);
                 }
+
+                // 将checkedData随机
+                randomArr();
 
                 // 显示 背词 界面
                 showRemember();
@@ -161,6 +165,8 @@
 
         // 默词阶段
         function writeFromMemory() {
+
+
             // 清空页面
             let $mainWindow = $("#id_main_window");
             $mainWindow.empty();
@@ -204,7 +210,7 @@
                 });
             }
             // 修改主窗口的高度
-            $mainWindow.css("height", 100 + 84 * checkedData.length + 100);
+            $mainWindow.css("height", (100 + 84 * checkedData.length) * 2);
 
             // 给 返回背词界面按钮添加事件监听
             let $backButton = $("button[class='main_window_backMemory']");
@@ -235,6 +241,23 @@
                 // 将用户的判题结果保存下来
                 statusData[i] = $("div[class='main_window_writeFromMemoryOneVocabulary']").eq(i).children("span").eq(2).text();
             }
+        }
+
+        // 乱序
+        function randomArr(){
+            // 外面的for循环 是用来控制次数的
+            for (let i = 0; i < checkedData.length - 1; i++) {
+                let randomIndex = Math.floor(Math.random() * (checkedData.length - i));
+                console.log(randomIndex);
+                // 替换
+                swap(randomIndex, checkedData.length - 1 - i);
+            }
+        }
+
+        function swap(a, b) {
+            let temp = checkedData[a];
+            checkedData[a] = checkedData[b];
+            checkedData[b] = temp;
         }
 
     </script>
